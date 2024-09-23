@@ -1,11 +1,11 @@
-import { app, BrowserWindow } from "electron";
-import { createRequire } from "node:module";
+import { app, BrowserWindow, ipcMain } from "electron";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { createRequire } from "node:module";
 createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 process.env.APP_ROOT = path.join(__dirname, "..");
-const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"];
+const VITE_DEV_SERVER_URL = process.env.VITE_DEV_SERVER_URL;
 const MAIN_DIST = path.join(process.env.APP_ROOT, "dist-electron");
 const RENDERER_DIST = path.join(process.env.APP_ROOT, "dist");
 process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL ? path.join(process.env.APP_ROOT, "public") : RENDERER_DIST;
@@ -35,6 +35,14 @@ app.on("window-all-closed", () => {
 app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
+  }
+});
+ipcMain.handle("render-video", async () => {
+  try {
+    return { success: true, message: "Video rendered successfully" };
+  } catch (error) {
+    console.error("Error rendering video:", error);
+    return { success: false, message: "Error rendering video" };
   }
 });
 app.whenReady().then(createWindow);

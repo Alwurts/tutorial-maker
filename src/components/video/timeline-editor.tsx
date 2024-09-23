@@ -45,6 +45,22 @@ export function TimelineEditor() {
 	const handleZoomIn = () => setZoom((prev) => Math.min(prev * 1.2, 5));
 	const handleZoomOut = () => setZoom((prev) => Math.max(prev / 1.2, 0.5));
 
+	const handleRenderVideo = async () => {
+		try {
+			const result = await window.electronAPI.renderVideo();
+			if (result.success) {
+				console.log(result.message);
+				// Handle successful render (e.g., show a success message to the user)
+			} else {
+				console.error(result.message);
+				// Handle render failure (e.g., show an error message to the user)
+			}
+		} catch (error) {
+			console.error("Error calling renderVideo:", error);
+			// Handle any errors that occur when calling the function
+		}
+	};
+
 	return (
 		<div className="gap-1 w-full flex flex-col justify-stretch items-stretch border-2 border-border rounded-lg">
 			<div className="flex justify-between items-center p-2">
@@ -90,6 +106,16 @@ export function TimelineEditor() {
 						{(currentFrame / FPS).toFixed(2)} :{" "}
 						{(videoData.durationInFrames / FPS).toFixed(2)}
 					</span>
+				</div>
+				<div className="flex gap-1">
+					<Button
+						variant="outline"
+						size="sm"
+						className="h-6"
+						onClick={handleRenderVideo}
+					>
+						Render
+					</Button>
 				</div>
 			</div>
 			<TimeLine videoData={videoData} zoom={zoom} />

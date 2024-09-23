@@ -1,56 +1,113 @@
 import type { TVideoRawData } from "@/zod/remotion";
 
 export const tutorialData: TVideoRawData = {
-	title: "Working with JavaScript Date Object",
+	title: "Using useCallback in React Functional Components",
 	scenes: [
 		{
-			title: "Creating a Date Object",
+			title: "Introduction to useCallback",
 			code: {
 				meta: "",
-				value: `// Create a new Date object
-const currentDate = new Date();`,
-				lang: "javascript",
-			},
-			duration: 2,
-		},
-		{
-			title: "Getting the Current Date",
-			code: {
-				meta: "",
-				value: `// Create a new Date object
-const currentDate = new Date();
-console.log(currentDate);
-// Output: Current date and time`,
-				lang: "javascript",
-			},
-			duration: 1.5,
-		},
-		{
-			title: "Getting the Current Date",
-			code: {
-				meta: "",
-				value: `// Create a new Date object
-const currentDate = new Date();
+				value: `// Import useCallback from React
+import React, { useCallback } from 'react';
 
-// Get the current date
-console.log(currentDate);
-// Output: Current date and time`,
+function MyComponent() {
+  /* Previous Code */
+
+  // Define a callback function
+  const handleClick = () => {
+    console.log('Button clicked!');
+  };
+
+  return (
+    <button onClick={handleClick}>
+      Click me
+    </button>
+  );
+}`,
 				lang: "javascript",
 			},
-			duration: 2,
+			duration: 3,
 		},
 		{
-			title: "Using HTML5 Date Input",
+			title: "Implementing useCallback",
 			code: {
 				meta: "",
-				value: `// Create a new Date object
-const currentDate = new Date();
+				value: `import React, { useCallback } from 'react';
 
-// Get the current date
-console.log(() => {
-  console.log("Hey")
-});
-// Output: Current date and time`,
+function MyComponent() {
+  /* Previous Code */
+
+  // Wrap the callback with useCallback
+  const handleClick = useCallback(() => {
+    console.log('Button clicked!');
+  }, []); // Empty dependency array
+
+  return (
+    <button onClick={handleClick}>
+      Click me
+    </button>
+  );
+}`,
+				lang: "javascript",
+			},
+			duration: 3,
+		},
+		{
+			title: "Adding Dependencies",
+			code: {
+				meta: "",
+				value: `import React, { 
+  useCallback, 
+  useState 
+} from 'react';
+
+function MyComponent() {
+  const [count, setCount] = useState(0);
+
+  // Add count as a dependency
+  const handleClick = useCallback(() => {
+    console.log('Count:', count);
+    setCount(count + 1);
+  }, [count]);
+
+  return (
+    <button onClick={handleClick}>
+      Clicked {count} times
+    </button>
+  );
+}`,
+				lang: "javascript",
+			},
+			duration: 3,
+		},
+		{
+			title: "Optimizing Child Components",
+			code: {
+				meta: "",
+				value: `import React, { 
+  useCallback, 
+  useState 
+} from 'react';
+
+function MyComponent() {
+  const [count, setCount] = useState(0);
+
+  const handleClick = useCallback(() => {
+    setCount(count + 1);
+  }, [count]);
+
+  return (
+    <>
+      <ChildComponent onClick={handleClick} />
+      <p>Count: {count}</p>
+    </>
+  );
+}
+
+// Memoized child component
+const ChildComponent = React.memo(({ onClick }) => (
+  <Child/>
+));`,
 				lang: "javascript",
 			},
 			duration: 3,

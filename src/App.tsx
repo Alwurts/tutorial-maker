@@ -5,6 +5,14 @@ import { useVideoStore } from "./hooks/video-store";
 import { tutorialData } from "./lib/tutorialData";
 import { SceneEditor } from "./components/code/scene-editor";
 
+declare global {
+	interface Window {
+		electronAPI: {
+			renderVideo: () => Promise<{ success: boolean; message: string }>;
+		};
+	}
+}
+
 export default function App() {
 	const initializeVideoData = useVideoStore(
 		(state) => state.initializeVideoData,

@@ -21,7 +21,7 @@ export const CodeScene = ({ oldScene, newScene }: SceneProps) => {
 	return (
 		<div className="w-full bg-gradient-to-br from-blue-400 to-blue-600 p-12">
 			<div className="p-16 gap-6 flex flex-col justify-start items-stretch bg-[#011525] h-full rounded-3xl">
-				<Pre ref={ref} code={code} handlers={[tokenTransitions]} />
+				<Pre ref={ref} code={code} handlers={[tokenTransitions]} className="whitespace-pre-wrap" />
 			</div>
 		</div>
 	);
